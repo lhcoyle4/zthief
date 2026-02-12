@@ -927,6 +927,16 @@
 #define MAXDAEMONS      10
 #define MAXFUSES        20
 
+struct delayed_action {
+        int d_type;
+        int (*d_func)();
+        union {
+                VOID *vp;
+                int  i;
+        } d_arg;
+        int d_time;
+};
+
 extern struct delayed_action d_list[MAXDAEMONS];
 extern struct delayed_action f_list[MAXFUSES];
 extern int demoncnt;        /* number of active daemons */
@@ -1353,6 +1363,7 @@ extern WINDOW *cw;                      /* Window that the player sees */
 extern WINDOW *hw;                      /* Used for the help command */
 extern WINDOW *mw;                      /* Used to store mosnters */
 extern WINDOW *msgw;                    /* Message window */
+extern WINDOW *sidew;                   /* Sidebar window for nearby info */
 extern bool pool_teleport;              /* just teleported from a pool */
 extern bool inwhgt;                     /* true if from wghtchk() */
 extern bool running;                    /* True if player is running */
@@ -1402,4 +1413,44 @@ extern struct words sylls[NSYLLS];
 extern struct words stones[NSTONES];
 extern struct words wood[NWOOD];
 extern struct words metal[NMETAL];
+
+/* Color pair definitions */
+#define CP_NORMAL       1
+#define CP_MONSTER_HOSTILE  2
+#define CP_MONSTER_FRIENDLY 3
+#define CP_MONSTER_NEUTRAL  4
+#define CP_MONSTER_UNIQUE   5
+#define CP_ITEM_WEAPON  6
+#define CP_ITEM_ARMOR   7
+#define CP_ITEM_GOLD    8
+#define CP_ITEM_FOOD    9
+#define CP_ITEM_POTION  10
+#define CP_ITEM_SCROLL  11
+#define CP_ITEM_RING    12
+#define CP_ITEM_STICK   13
+#define CP_ITEM_MISC    14
+#define CP_COMBAT_HIT   15
+#define CP_COMBAT_MISS  16
+#define CP_HEALTH_GOOD  17
+#define CP_HEALTH_WARN  18
+#define CP_HEALTH_CRIT  19
+
+/* Color system functions */
+extern bool color_support;
+void init_color_pairs();
+int get_monster_color();
+int get_item_color();
+int get_health_color();
+
+/* Sidebar functions */
+void update_sidebar();
+void add_combat_log();
+
+/* Legend function */
+void show_legend();
+
+/* Display helper functions */
+void draw_monster();
+void draw_item();
+void draw_char_colored();
 

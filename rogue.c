@@ -96,6 +96,7 @@ WINDOW *cw;                             /* Window that the player sees */
 WINDOW *hw;                             /* Used for the help command */
 WINDOW *mw;                             /* Used to store monsters */
 WINDOW *msgw;                           /* Used to display messages */
+WINDOW *sidew;                          /* Sidebar for nearby info */
 bool pool_teleport = FALSE;             /* just teleported from a pool */
 bool inwhgt = FALSE;                    /* true if from wghtchk() */
 bool after;                             /* True if we want after daemons */

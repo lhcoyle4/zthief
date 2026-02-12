@@ -75,6 +75,7 @@ command()
             if (!((running || count) && jump)) {
                 wmove(cw, hero.y, hero.x);
                 draw(cw);
+                update_sidebar();  /* Update sidebar with nearby info */
             }
 
             after = TRUE;
@@ -349,6 +350,7 @@ command()
                     when '<' : after = FALSE; u_level();
                     when '=' : after = FALSE; display();
                     when '?' : after = FALSE; help();
+                    when '@' : after = FALSE; show_legend();
 
             /* no character descriptions yet until updated (help.c) */
             /* when '\\' : after = FALSE; ident_hero(); */

@@ -1416,7 +1416,28 @@ coord *cp;
                             ch = sch;
                     }
                 }
-                mvwaddch(cw, y, x, ch);
+                
+                /* Draw with color if it's an item */
+                {
+                    struct linked_list *item;
+                    struct object *obj;
+                    int color = 0;
+                    
+                    /* Check if this is an item on the ground */
+                    if ((item = find_obj(y, x)) != NULL) {
+                        obj = OBJPTR(item);
+                        color = get_item_color(obj);
+                    }
+                    
+                    if (color > 0) {
+                        wattron(cw, color);
+                        mvwaddch(cw, y, x, ch);
+                        wattroff(cw, color);
+                    }
+                    else {
+                        mvwaddch(cw, y, x, ch);
+                    }
+                }
             }
         }
     }

@@ -13,7 +13,7 @@
 #   See the file LICENSE.TXT for full copyright and licensing information.
 
 DISTNAME=xrogue8.0.3
-PROGRAM=xrogue
+PROGRAM=zthief
 
 O=o
 
@@ -25,7 +25,8 @@ OBJS1 =	vers.$(O) actions.$(O) bolt.$(O) chase.$(O) command.$(O) daemon.$(O) \
 OBJS2 = mons_def.$(O) move.$(O) n_level.$(O) options.$(O) outside.$(O) pack.$(O) \
         passages.$(O) player.$(O) potions.$(O) rings.$(O) rip.$(O) rooms.$(O) \
         save.$(O) scrolls.$(O) sticks.$(O) things.$(O) trader.$(O) util.$(O) \
-        weapons.$(O) wear.$(O) wizard.$(O) rogue.$(O) state.$(O) xcrypt.$(O)
+        weapons.$(O) wear.$(O) wizard.$(O) rogue.$(O) state.$(O) xcrypt.$(O) \
+        colors.$(O) sidebar.$(O) legend.$(O) display.$(O)
 OBJS  = $(OBJS1) $(OBJS2)
 
 CFILES=	vers.c actions.c bolt.c chase.c command.c daemon.c daemons.c eat.c \
@@ -33,7 +34,7 @@ CFILES=	vers.c actions.c bolt.c chase.c command.c daemon.c daemons.c eat.c \
 	misc.c monsters.c mons_def.c move.c n_level.c options.c outside.c \
 	pack.c passages.c player.c potions.c rings.c rip.c rooms.c save.c \
 	scrolls.c sticks.c things.c trader.c util.c weapons.c wear.c wizard.c \
-	rogue.c state.c xcrypt.c
+	rogue.c state.c xcrypt.c colors.c sidebar.c legend.c display.c
 
 MISC  = Makefile README.TXT LICENSE.TXT $(PROGRAM).sln $(PROGRAM).vcproj
 

@@ -176,13 +176,20 @@ char **envp;
     /*
      * Set up windows
      */
-    cw = newwin(lines, cols, 0, 0);
-    mw = newwin(lines, cols, 0, 0);
+    #define SIDEBAR_WIDTH 26
+    int dungeon_width = cols - SIDEBAR_WIDTH;
+    
+    cw = newwin(lines, dungeon_width, 0, 0);
+    mw = newwin(lines, dungeon_width, 0, 0);
     hw = newwin(lines, cols, 0, 0);
     msgw = newwin(4, cols, 0, 0);
-    if (cw == NULL || hw == NULL || mw == NULL || msgw == NULL) {
+    sidew = newwin(lines - 2, SIDEBAR_WIDTH, 0, dungeon_width);
+    if (cw == NULL || hw == NULL || mw == NULL || msgw == NULL || sidew == NULL) {
         exit_game(EXIT_CLS | EXIT_ENDWIN);
     }
+
+    /* Initialize color support */
+    init_color_pairs();
 
     keypad(cw, TRUE);
     keypad(hw, TRUE);

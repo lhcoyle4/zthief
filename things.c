@@ -460,7 +460,20 @@ struct linked_list *item;
          * Link it into the level object list
          */
         attach(lvl_obj, obj);
-        mvaddch(hero.y, hero.x, op->o_type);
+        
+        /* Draw the item with color */
+        {
+            int color = get_item_color(op);
+            if (color > 0) {
+                attron(COLOR_PAIR(color));
+                mvaddch(hero.y, hero.x, op->o_type);
+                attroff(COLOR_PAIR(color));
+            }
+            else {
+                mvaddch(hero.y, hero.x, op->o_type);
+            }
+        }
+        
         op->o_pos = hero;
         msg("Dropped %s", inv_name(op, TRUE));
     }

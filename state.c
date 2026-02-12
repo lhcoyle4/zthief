@@ -959,16 +959,6 @@ rs_read_coord(int inf, coord *c)
     return(READSTAT);
 }
 
-struct delayed_action {
-    int d_type;
-    int (*d_func)();
-	union {
-		VOID *vp;
-		int  i;
-	} d_arg;
-    int d_time;
-};
-
 rs_write_daemons(FILE *savef, struct delayed_action *d_list,int count)
 {
     int i = 0;

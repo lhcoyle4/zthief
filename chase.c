@@ -96,7 +96,7 @@ register struct thing *tp;
         if (cansee(y, x) &&
             off(*tp, ISINWALL) &&
             !invisible(tp))
-            mvwaddch(cw, y, x, tp->t_type);
+            draw_monster(tp, y, x);
 
         /* Fix the monster window */
         mvwaddch(mw, tp->t_pos.y, tp->t_pos.x, ' '); /* Clear old position */
@@ -794,7 +794,7 @@ register struct thing *th;
     if (cansee(unc(ch_ret)) &&
         off(*th, ISINWALL) &&
         !invisible(th))
-        mvwaddch(cw, ch_ret.y, ch_ret.x, th->t_type);
+        draw_monster(th, ch_ret.y, ch_ret.x);
 
     /* Record monster's last position (if new one is different) */
     if (!ce(ch_ret, old_pos)) th->t_oldpos = old_pos;

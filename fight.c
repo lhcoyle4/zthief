@@ -822,6 +822,18 @@ bool back_stab, thrown, short_msg;
     if (short_msg) addmsg(s);
     else addmsg("%s%s.", s, def_name);
     endmsg();
+    
+    /* Log to sidebar combat log */
+    if (short_msg) {
+        char logmsg[80];
+        sprintf(logmsg, "%s%s", att_name, s);
+        add_combat_log(logmsg);
+    }
+    else {
+        char logmsg[80];
+        sprintf(logmsg, "%s%s%s", att_name, s, def_name);
+        add_combat_log(logmsg);
+    }
 }
 
 /*
@@ -866,6 +878,18 @@ bool thrown, short_msg;
     if (short_msg) addmsg("%s.", s);
     else addmsg("%s %s.", s, def_name);
     endmsg();
+    
+    /* Log to sidebar combat log */
+    if (short_msg) {
+        char logmsg[80];
+        sprintf(logmsg, "%s%s", att_name, s);
+        add_combat_log(logmsg);
+    }
+    else {
+        char logmsg[80];
+        sprintf(logmsg, "%s%s %s", att_name, s, def_name);
+        add_combat_log(logmsg);
+    }
 }
 
 /*

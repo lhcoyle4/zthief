@@ -350,11 +350,35 @@ line_two:
         for (hpwidth = 0; temp; hpwidth++)
             temp /= 10;
     }
-    sprintf(buf, "Lvl:%d  Hp:%*d(%*d)  Ac:%d  Carry:%d(%d)  Exp:%d/%lu  %s",
-        level, hpwidth, stat_ptr->s_hpt, hpwidth, max_ptr->s_hpt,
-        ac_compute(FALSE) - dext_prot(s_dext),stat_ptr->s_pack/10,
-        stat_ptr->s_carry/10, stat_ptr->s_lvl, stat_ptr->s_exp, 
-        cnames[player.t_ctype][min(stat_ptr->s_lvl-1, NUM_CNAMES-1)]);
+    
+    /* Build the status line with color coding */
+    wmove(cw, lines-1, 0);
+    
+    /* Level */
+    wprintw(cw, "Lvl:%d  ", level);
+    
+    /* HP with health color */
+    {
+        int hp_color = get_health_color(stat_ptr->s_hpt, max_ptr->s_hpt);
+        if (hp_color > 0) wattron(cw, hp_color);
+        wprintw(cw, "Hp:%*d(%*d)", hpwidth, stat_ptr->s_hpt, hpwidth, max_ptr->s_hpt);
+        if (hp_color > 0) wattroff(cw, hp_color);
+    }
+    
+    /* AC */
+    wprintw(cw, "  Ac:%d  ", ac_compute(FALSE) - dext_prot(s_dext));
+    
+    /* Gold in yellow */
+    if (color_support) wattron(cw, COLOR_PAIR(CP_ITEM_GOLD));
+    wprintw(cw, "Gold:%ld", purse);
+    if (color_support) wattroff(cw, COLOR_PAIR(CP_ITEM_GOLD));
+    
+    /* Carry weight */
+    wprintw(cw, "  Carry:%d(%d)  ", stat_ptr->s_pack/10, stat_ptr->s_carry/10);
+    
+    /* Experience */
+    wprintw(cw, "Exp:%d/%lu  %s", stat_ptr->s_lvl, stat_ptr->s_exp,
+            cnames[player.t_ctype][min(stat_ptr->s_lvl-1, NUM_CNAMES-1)]);
 
     /*
      * Save old status
@@ -365,7 +389,7 @@ line_two:
     s_pack = stat_ptr->s_pack;
     s_carry = stat_ptr->s_carry;
     s_exp = stat_ptr->s_exp; 
-    mvwaddstr(cw, lines-1, 0, buf);
+    
     wclrtoeol(cw);
     newfont(cw);
     wmove(cw, oy, ox);
